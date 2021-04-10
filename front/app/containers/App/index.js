@@ -14,6 +14,7 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import AboutPage from 'containers/AboutPage/Loadable';
+import ChatPage from 'containers/ChatPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import Header from 'components/Header';
@@ -58,6 +59,7 @@ export default function App() {
         <Route path="/features" component={FeaturePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/about" component={AboutPage} />
+        <Route path="/chat1" component={ChatPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />

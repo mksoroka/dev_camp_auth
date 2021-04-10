@@ -28,4 +28,8 @@ export default defineMessages({
     id: `${scope}.logout`,
     defaultMessage: 'Logout',
   },
+  chat1: {
+    id: `${scope}.chat1`,
+    defaultMessage: 'Chat1',
+  },
 });

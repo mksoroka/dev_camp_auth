@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
@@ -10,7 +10,6 @@ import HeaderLink from './HeaderLink';
 import Banner from './banner.jpg';
 import messages from './messages';
 import useAuth from '../../hooks/useAuth';
-import { Context } from '../../authStore';
 
 function Header() {
   const { user, logout } = useAuth();
@@ -57,6 +56,10 @@ function Header() {
             <FormattedMessage {...messages.logout} />
           </HeaderLink>
         )}
+
+        <HeaderLink to="/chat1">
+          <FormattedMessage {...messages.chat1} />
+        </HeaderLink>
       </NavBar>
     </div>
   );
