@@ -27,7 +27,7 @@ function Header() {
 
   return (
     <div>
-      <A href="https://www.reactboilerplate.com/">
+      <A href="/">
         <Img src={Banner} alt="react-boilerplate - Logo" />
       </A>
       <NavBar>
@@ -57,8 +57,20 @@ function Header() {
           </HeaderLink>
         )}
 
+        <HeaderLink to="/chat">
+          <FormattedMessage {...messages.chat} />
+        </HeaderLink>
         <HeaderLink to="/chat1">
           <FormattedMessage {...messages.chat1} />
+        </HeaderLink>
+        <HeaderLink to="/chat2">
+          <FormattedMessage {...messages.chat2} />
+        </HeaderLink>
+        <HeaderLink to="/chat3">
+          <FormattedMessage {...messages.chat3} />
+        </HeaderLink>
+        <HeaderLink to="/chat4">
+          <FormattedMessage {...messages.chat4} />
         </HeaderLink>
       </NavBar>
     </div>

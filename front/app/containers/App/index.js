@@ -15,6 +15,10 @@ import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import AboutPage from 'containers/AboutPage/Loadable';
 import ChatPage from 'containers/ChatPage/Loadable';
+import ChatPage1 from 'containers/ChatPage1/Loadable';
+import ChatPage2 from 'containers/ChatPage2/Loadable';
+import ChatPage3 from 'containers/ChatPage3/Loadable';
+import ChatPage4 from 'containers/ChatPage4/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import Header from 'components/Header';
@@ -59,7 +63,11 @@ export default function App() {
         <Route path="/features" component={FeaturePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/about" component={AboutPage} />
-        <Route path="/chat1" component={ChatPage} />
+        <Route path="/chat" component={ChatPage} />
+        <Route path="/chat1" component={ChatPage1} />
+        <Route path="/chat2" component={ChatPage2} />
+        <Route path="/chat3" component={ChatPage3} />
+        <Route path="/chat4" component={ChatPage4} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />

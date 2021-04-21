@@ -1,4 +1,5 @@
 const express = require('express');
+const enableWs = require('express-ws');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const mongoSanitize = require('express-mongo-sanitize');
@@ -13,8 +14,11 @@ const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
+const messageController = require('./controllers/message.controller');
 
 const app = express();
+
+enableWs(app);
 
 if (config.env !== 'test') {
   app.use(morgan.successHandler);
@@ -35,7 +39,7 @@ app.use(xss());
 app.use(mongoSanitize());
 
 // gzip compression
-app.use(compression());
+// app.use(compression());
 
 // enable cors
 app.use(cors());
@@ -50,6 +54,7 @@ if (config.env === 'production') {
   app.use('/v1/auth', authLimiter);
 }
 
+app.ws('/v1/subscribeWS', messageController.subscribeWS);
 // v1 api routes
 app.use('/v1', routes);
 

@@ -4,5 +4,7 @@ const messageController = require('../../controllers/message.controller');
 const router = express.Router();
 
 router.route('/').post(messageController.createMessage).get(messageController.getMessages);
+router.route('/subscribe').get(messageController.subscribe);
+router.route('/subscribeSEE').get(messageController.subscribeSSE);
 
 module.exports = router;

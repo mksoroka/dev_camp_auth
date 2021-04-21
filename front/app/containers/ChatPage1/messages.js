@@ -10,6 +10,6 @@ export const scope = 'boilerplate.containers.AboutPage';
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: 'Chat Page',
+    defaultMessage: 'Chat Page. v1',
   },
 });

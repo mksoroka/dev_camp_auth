@@ -6,7 +6,7 @@ import H1 from 'components/H1';
 import messages from './messages';
 import useAuth from '../../hooks/useAuth';
 
-export default function ChatPage1() {
+export default function ChatPage3() {
   const { user } = useAuth();
 
   const userName = useMemo(
@@ -26,6 +26,16 @@ export default function ChatPage1() {
       .then(response => {
         setChatMessages(response.results);
       });
+  }, []);
+
+  useEffect(() => {
+    const evtSource = new EventSource(
+      'http://localhost:3001/v1/messages/subscribeSEE',
+    );
+
+    evtSource.addEventListener('message', event => {
+      setChatMessages(m => [JSON.parse(event.data), ...m.slice(0, 9)]);
+    });
   }, []);
 
   const handleSubmit = useCallback(
@@ -56,7 +66,7 @@ export default function ChatPage1() {
   return (
     <div>
       <Helmet>
-        <title>Chat Page. v1</title>
+        <title>Chat Page. v3</title>
         <meta
           name="description"
           content="Feature page of React.js Boilerplate application"

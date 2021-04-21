@@ -6,17 +6,15 @@ import H1 from 'components/H1';
 import messages from './messages';
 import useAuth from '../../hooks/useAuth';
 
-export default function ChatPage1() {
+export default function ChatPage2() {
   const { user } = useAuth();
-
   const userName = useMemo(
     () => (user ? user.name : `user #${new Date().getTime()}`),
     [user],
   );
-
   const [chatMessages, setChatMessages] = useState([]);
-
   const [newMessage, setNewMessage] = useState('');
+  let isClose = false;
 
   useEffect(() => {
     fetch('http://localhost:3001/v1/messages', {
@@ -26,6 +24,32 @@ export default function ChatPage1() {
       .then(response => {
         setChatMessages(response.results);
       });
+  }, []);
+
+  const subscribe = useCallback(() => {
+    if (!isClose) {
+      fetch(`http://localhost:3001/v1/messages/subscribe`).then(response => {
+        if (response.status === 502) {
+          subscribe();
+        } else if (response.status !== 200) {
+          new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
+            subscribe();
+          });
+        } else {
+          response.text().then(message => {
+            setChatMessages(m => [JSON.parse(message), ...m.slice(0, 9)]);
+            subscribe();
+          });
+        }
+      });
+    }
+  }, [chatMessages]);
+
+  useEffect(() => {
+    subscribe();
+    return () => {
+      isClose = true;
+    };
   }, []);
 
   const handleSubmit = useCallback(
@@ -56,7 +80,7 @@ export default function ChatPage1() {
   return (
     <div>
       <Helmet>
-        <title>Chat Page. v1</title>
+        <title>Chat Page. v2</title>
         <meta
           name="description"
           content="Feature page of React.js Boilerplate application"

@@ -30,6 +30,22 @@ export default defineMessages({
   },
   chat1: {
     id: `${scope}.chat1`,
-    defaultMessage: 'Chat1',
+    defaultMessage: 'Chat 1',
+  },
+  chat: {
+    id: `${scope}.chat`,
+    defaultMessage: 'Chat',
+  },
+  chat2: {
+    id: `${scope}.chat2`,
+    defaultMessage: 'Chat 2',
+  },
+  chat3: {
+    id: `${scope}.chat3`,
+    defaultMessage: 'Chat 3',
+  },
+  chat4: {
+    id: `${scope}.chat4`,
+    defaultMessage: 'Chat4',
   },
 });

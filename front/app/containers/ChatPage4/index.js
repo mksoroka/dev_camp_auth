@@ -6,7 +6,7 @@ import H1 from 'components/H1';
 import messages from './messages';
 import useAuth from '../../hooks/useAuth';
 
-export default function ChatPage1() {
+export default function ChatPage4() {
   const { user } = useAuth();
 
   const userName = useMemo(
@@ -18,6 +18,10 @@ export default function ChatPage1() {
 
   const [newMessage, setNewMessage] = useState('');
 
+  const [ws, setWs] = useState(null);
+
+  const [refresh, setRefresh] = useState(false);
+
   useEffect(() => {
     fetch('http://localhost:3001/v1/messages', {
       method: 'GET',
@@ -26,24 +30,32 @@ export default function ChatPage1() {
       .then(response => {
         setChatMessages(response.results);
       });
-  }, []);
+  }, [refresh]);
+
+  useEffect(() => {
+    const socket = new WebSocket('ws://localhost:3001/v1/subscribeWS');
+    socket.onmessage = function(event) {
+      setChatMessages(m => [JSON.parse(event.data), ...m.slice(0, 9)]);
+    };
+    setWs(socket);
+    socket.onclose = () => {
+      setTimeout(() => {
+        setRefresh(r => !r);
+      }, 2000);
+    };
+  }, [refresh]);
 
   const handleSubmit = useCallback(
     async event => {
       event.preventDefault();
       if (newMessage) {
-        fetch('http://localhost:3001/v1/messages', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+        ws.send(
+          JSON.stringify({
             message: newMessage,
             author: userName,
           }),
-        }).then(() => {
-          setNewMessage('');
-        });
+        );
+        setNewMessage('');
       }
     },
     [newMessage],
@@ -56,7 +68,7 @@ export default function ChatPage1() {
   return (
     <div>
       <Helmet>
-        <title>Chat Page. v1</title>
+        <title>Chat Page. v4</title>
         <meta
           name="description"
           content="Feature page of React.js Boilerplate application"

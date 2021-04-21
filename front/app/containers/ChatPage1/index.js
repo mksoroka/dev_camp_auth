@@ -8,15 +8,21 @@ import useAuth from '../../hooks/useAuth';
 
 export default function ChatPage1() {
   const { user } = useAuth();
-
   const userName = useMemo(
     () => (user ? user.name : `user #${new Date().getTime()}`),
     [user],
   );
-
   const [chatMessages, setChatMessages] = useState([]);
-
   const [newMessage, setNewMessage] = useState('');
+  const [refresh, setRefresh] = useState(false);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRefresh(r => !r);
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
     fetch('http://localhost:3001/v1/messages', {
@@ -26,7 +32,7 @@ export default function ChatPage1() {
       .then(response => {
         setChatMessages(response.results);
       });
-  }, []);
+  }, [refresh]);
 
   const handleSubmit = useCallback(
     async event => {
